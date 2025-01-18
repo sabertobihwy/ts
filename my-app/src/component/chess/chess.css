@@ -1,0 +1,24 @@
+.grid{
+    width: 50px;
+    height: 50px;
+    outline: 1px solid grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.chess{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.redChess{
+    background: radial-gradient(#fff, red);
+}
+
+
+.blackChess{
+    background: radial-gradient(#fff, black);
+}
