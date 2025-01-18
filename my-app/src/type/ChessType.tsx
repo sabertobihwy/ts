@@ -4,3 +4,10 @@ export enum ChessType {
     none
 
 }
+
+export enum GameStatus {
+    redWin = ChessType.red,
+    blackWin = ChessType.black,
+    equal,
+    gaming
+}
