@@ -17,7 +17,15 @@ module.exports = {
     ],
     module:{
         rules:[
-            {test: /.ts$/, loader: 'ts-loader'}
+            {
+                test: /.ts$/ ,
+                use:[
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            "transpileOnly": true
+                        }
+                }]}
         ]
     },
     resolve:{

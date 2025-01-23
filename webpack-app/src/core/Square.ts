@@ -6,6 +6,7 @@ export class Square {
     }
     public set viewer(viewer: IViewer) {
         this._viewer = viewer
+        this._viewer.show()
     }
     public get point() {
         return this._pointer
