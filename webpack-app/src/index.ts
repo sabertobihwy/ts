@@ -70,7 +70,7 @@ $('#right').on('click', function () {
     });
 
 $('#rotate').on('click', function () {
-    group.rotate()
+    SquareRule.move(group, Direction.ROTATE, () => { clearInterval(timer) })
 })
 
 

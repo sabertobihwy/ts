@@ -20,7 +20,8 @@ export const colorList: string[] = [
 export enum Direction {
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    ROTATE
 }
 
 export class LShape extends SquareGroup {

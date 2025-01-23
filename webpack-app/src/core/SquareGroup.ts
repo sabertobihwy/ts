@@ -46,7 +46,6 @@ export class SquareGroup {
 
     }
 
-
     protected _clockWise: boolean = true
     public rotate() {
         if (this._clockWise) {
@@ -64,7 +63,6 @@ export class SquareGroup {
                 }
             })
         }
-        //debugger
-        this.calculateGroup()
+
     }
 }

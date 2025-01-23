@@ -39,6 +39,10 @@ export class SquareRule {
                         y: centerpoint.y
                     }, callback)
 
+                case Direction.ROTATE:
+                    squareGroup.rotate()  // change this._shape 
+                    return SquareRule.move(squareGroup, squareGroup.centerpoint, callback)
+
                 default:
                     throw new Error("Invalid Direction value");
             }
@@ -54,7 +58,7 @@ export class SquareRule {
         const result = shape.some(s => {
             const x = s.x + targetCenterPoint.x
             const y = s.y + targetCenterPoint.y
-            console.log(`x=${x},y=${y},panelWidth=${panelLogicSize.width},panelHeight=${panelLogicSize.height}`)
+            // console.log(`x=${x},y=${y},panelWidth=${panelLogicSize.width},panelHeight=${panelLogicSize.height}`)
             if (x <= -1 || x >= panelLogicSize.width || y <= 0 || y >= panelLogicSize.height) {
                 console.log("trigger return false")
                 return true
