@@ -1,4 +1,5 @@
 import { Square } from "./Square"
+import { SquareGroup } from "./SquareGroup"
 
 export interface Point {
     readonly x: number,
@@ -12,25 +13,6 @@ export interface IViewer {
 
 export type Shape = Point[]
 
-export enum ShapeType {
-    LShape,
-    ZShape,
-    ZMirrorShape,
-    IShape
-}
-
-export interface IShapePoint {
-    [key: number]: Shape
-
-}
-
-export const shapePoint: IShapePoint = {
-    [ShapeType.LShape]: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
-    [ShapeType.ZShape]: [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }],
-    [ShapeType.ZMirrorShape]: [{ x: 1, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 1 }],
-    [ShapeType.IShape]: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: 1 }]
-}
-
 export const colorList: string[] = [
     'red', 'yellow', 'green', 'white'
 ]
@@ -40,3 +22,72 @@ export enum Direction {
     LEFT,
     RIGHT
 }
+
+export class LShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 1 }])
+    }
+    public rotate(): void {
+        super.rotate()
+        this._clockWise = !this._clockWise
+    }
+}
+
+export class ZShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: -1, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }])
+    }
+    public rotate(): void {
+        super.rotate()
+        this._clockWise = !this._clockWise
+    }
+}
+
+export class ZMirrorShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: 1, y: 0 }, { x: 0, y: 0 }, { x: 0, y: 1 }, { x: -1, y: 1 }])
+    }
+    public rotate(): void {
+        super.rotate()
+        this._clockWise = !this._clockWise
+    }
+}
+
+export class IShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 0, y: -2 }, { x: 0, y: 1 }])
+    }
+    public rotate(): void {
+        super.rotate()
+        this._clockWise = !this._clockWise
+    }
+}
+
+export class TShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: -1, y: 0 }, { x: 1, y: 0 }])
+    }
+    public rotate(): void {
+        super.rotate()
+    }
+}
+
+export class SquareShape extends SquareGroup {
+    constructor(_color: string, _centerpoint: Point) {
+        super(_color, _centerpoint, [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: 1 }])
+    }
+    public rotate(): void {
+        return
+    }
+}
+
+export type SquareGroupConstructor = new (color: string, centerpoint: Point) => SquareGroup;
+
+export const ShapeList: SquareGroupConstructor[] = [
+    LShape,
+    ZShape,
+    ZMirrorShape,
+    IShape,
+    TShape,
+    SquareShape
+]

@@ -31,12 +31,40 @@ export class SquareGroup {
             return false
         }
         this._centerpoint = val
+        this.calculateGroup()
+        return true
+    }
+
+    // 根据_centerpoint & shape 修改 group
+    private calculateGroup() {
         this._group.forEach((_, i) => {
             this._group[i].point = { // trigger show()
                 x: this._centerpoint.x + this._shape[i].x,
                 y: this._centerpoint.y + this._shape[i].y,
             }
         })
-        return true
+
+    }
+
+
+    protected _clockWise: boolean = true
+    public rotate() {
+        if (this._clockWise) {
+            this._shape = this._shape.map(s => {
+                return {
+                    x: -s.y,
+                    y: s.x
+                }
+            })
+        } else {
+            this._shape = this._shape.map(s => {
+                return {
+                    x: s.y,
+                    y: -s.x
+                }
+            })
+        }
+        //debugger
+        this.calculateGroup()
     }
 }

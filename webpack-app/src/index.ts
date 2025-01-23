@@ -22,7 +22,7 @@ const container = $('#container')
 //     }
 // }, 1000)
 
-const group = getRandomSquareGroup({ x: 3, y: 4 }, container)
+const group: SquareGroup = getRandomSquareGroup({ x: 3, y: 4 }, container)
 
 let longPressTimer: any;
 
@@ -68,6 +68,10 @@ $('#right').on('click', function () {
     .on('mouseup mouseleave', function () {
         clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
     });
+
+$('#rotate').on('click', function () {
+    group.rotate()
+})
 
 
 const timer = setInterval(() => {
