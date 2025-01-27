@@ -21,15 +21,16 @@ export class SquareViewer implements IViewer {
                 position: 'absolute',
                 width: singleSquare.width,
                 height: singleSquare.height,
-                left: this._square.point.x * singleSquare.width,
-                top: this._square.point.y * singleSquare.height,
+                left: Math.floor(this._square.point.x * singleSquare.width),
+                top: Math.floor(this._square.point.y * singleSquare.height),
                 border: singleSquare.border,
+                padding: "1px",
                 boxSizing: "border-box"
             }).appendTo(this._container)
         }
         this._dom.css({
-            left: this._square.point.x * singleSquare.width,
-            top: this._square.point.y * singleSquare.height,
+            left: Math.floor(this._square.point.x * singleSquare.width),
+            top: Math.floor(this._square.point.y * singleSquare.height),
             backgroundColor: this._square.color
         })
         if (this._square.point.y * singleSquare.height >= this._containerSize) {

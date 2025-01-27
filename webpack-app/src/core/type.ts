@@ -14,7 +14,7 @@ export interface IViewer {
 export type Shape = Point[]
 
 export const colorList: string[] = [
-    'red', 'yellow', 'green', 'white'
+    'red', 'yellow', 'green', 'grey'
 ]
 
 export enum Direction {
@@ -22,6 +22,18 @@ export enum Direction {
     LEFT,
     RIGHT,
     ROTATE
+}
+
+export enum GameStatus {
+    INIT,
+    PLAYING,
+    PAUSED,
+    END
+}
+
+export interface IGameViewer {
+    showNext(g: SquareGroup): void,
+    switch(g: SquareGroup): void
 }
 
 export class LShape extends SquareGroup {

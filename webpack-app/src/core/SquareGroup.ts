@@ -1,6 +1,7 @@
 import { SquareRule } from "../SquareRule";
 import { Square } from "./Square";
 import { Point, Shape } from "./type";
+import { SizeType } from "./viewer/viewerConfig";
 
 export class SquareGroup {
     private _group: readonly Square[]
@@ -25,14 +26,23 @@ export class SquareGroup {
     public get centerpoint() {
         return this._centerpoint
     }
-    public setCenterpoint(val: Point, callback?: () => void): boolean {
-        if (!SquareRule.canIMove(val, this._shape)) {
-            callback?.()
-            return false
+    public setCenterpoint(val: Point, exist_group: Square[]): boolean
+    public setCenterpoint(val: Point, exist_group: Square[], sizeType: SizeType, callback?: () => void): boolean
+    public setCenterpoint(val: Point, exist_group: Square[], sizeType?: SizeType, callback?: () => void): boolean {
+        // with limit test & set all group 
+        if (sizeType) {
+            if (!SquareRule.canIMove(val, this._shape, sizeType, exist_group)) {
+                callback?.()
+                return false
+            }
+            this._centerpoint = val
+            this.calculateGroup()
+            return true
+        } else {
+            this._centerpoint = val
+            return true
         }
-        this._centerpoint = val
-        this.calculateGroup()
-        return true
+
     }
 
     // 根据_centerpoint & shape 修改 group

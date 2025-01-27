@@ -1,6 +1,6 @@
 import { Square } from "./core/Square";
 import { SquareGroup } from "./core/SquareGroup";
-import { getRandomShape, getRandomSquareGroup } from "./core/util";
+import { getRandomSquareGroup } from "./core/util";
 import { SquareViewer } from "./core/viewer/SquareViewer";
 import $ from 'jquery'
 import { SquareRule } from "./SquareRule";
@@ -22,58 +22,58 @@ const container = $('#container')
 //     }
 // }, 1000)
 
-const group: SquareGroup = getRandomSquareGroup({ x: 3, y: 4 }, container)
+const group: SquareGroup = getRandomSquareGroup({ x: 3, y: 4 })
 
 let longPressTimer: any;
 
-$('#down')
-    .on('click', function () {
-        SquareRule.move(group, Direction.DOWN, () => { clearInterval(timer) })
-    })
-    .on('mousedown', function () {
-        longPressTimer = setTimeout(() => {
-            console.log('Long press triggered');
-            // 在这里处理长按事件逻辑
-            SquareRule.moveDirectly(group, Direction.DOWN, () => { clearInterval(timer) })
-        }, 1000); // 长按持续时间（毫秒），这里设置为1秒
-    })
-    .on('mouseup mouseleave', function () {
-        clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
-    });
+// $('#down')
+//     .on('click', function () {
+//         SquareRule.move(group, Direction.DOWN, () => { clearInterval(timer) })
+//     })
+//     .on('mousedown', function () {
+//         longPressTimer = setTimeout(() => {
+//             console.log('Long press triggered');
+//             // 在这里处理长按事件逻辑
+//             SquareRule.moveDirectly(group, Direction.DOWN, () => { clearInterval(timer) })
+//         }, 1000); // 长按持续时间（毫秒），这里设置为1秒
+//     })
+//     .on('mouseup mouseleave', function () {
+//         clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
+//     });
 
 
-$('#left').on('click', function () {
-    SquareRule.move(group, Direction.LEFT, () => { clearInterval(timer) })
-}).on('mousedown', function () {
-    longPressTimer = setTimeout(() => {
-        console.log('Long press triggered');
-        // 在这里处理长按事件逻辑
-        SquareRule.moveDirectly(group, Direction.LEFT, () => { clearInterval(timer) })
-    }, 1000); // 长按持续时间（毫秒），这里设置为1秒
-})
-    .on('mouseup mouseleave', function () {
-        clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
-    });
+// $('#left').on('click', function () {
+//     SquareRule.move(group, Direction.LEFT, () => { clearInterval(timer) })
+// }).on('mousedown', function () {
+//     longPressTimer = setTimeout(() => {
+//         console.log('Long press triggered');
+//         // 在这里处理长按事件逻辑
+//         SquareRule.moveDirectly(group, Direction.LEFT, () => { clearInterval(timer) })
+//     }, 1000); // 长按持续时间（毫秒），这里设置为1秒
+// })
+//     .on('mouseup mouseleave', function () {
+//         clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
+//     });
 
 
-$('#right').on('click', function () {
-    SquareRule.move(group, Direction.RIGHT, () => { clearInterval(timer) })
-}).on('mousedown', function () {
-    longPressTimer = setTimeout(() => {
-        console.log('Long press triggered');
-        // 在这里处理长按事件逻辑
-        SquareRule.moveDirectly(group, Direction.RIGHT, () => { clearInterval(timer) })
-    }, 1000); // 长按持续时间（毫秒），这里设置为1秒
-})
-    .on('mouseup mouseleave', function () {
-        clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
-    });
+// $('#right').on('click', function () {
+//     SquareRule.move(group, Direction.RIGHT, () => { clearInterval(timer) })
+// }).on('mousedown', function () {
+//     longPressTimer = setTimeout(() => {
+//         console.log('Long press triggered');
+//         // 在这里处理长按事件逻辑
+//         SquareRule.moveDirectly(group, Direction.RIGHT, () => { clearInterval(timer) })
+//     }, 1000); // 长按持续时间（毫秒），这里设置为1秒
+// })
+//     .on('mouseup mouseleave', function () {
+//         clearTimeout(longPressTimer); // 用户释放或移开时清除计时器
+//     });
 
-$('#rotate').on('click', function () {
-    SquareRule.move(group, Direction.ROTATE, () => { clearInterval(timer) })
-})
+// $('#rotate').on('click', function () {
+//     SquareRule.move(group, Direction.ROTATE, () => { clearInterval(timer) })
+// })
 
 
-const timer = setInterval(() => {
-    SquareRule.move(group, Direction.DOWN, () => { clearInterval(timer) })
-}, 1000)
+// const timer = setInterval(() => {
+//     SquareRule.move(group, Direction.DOWN, () => { clearInterval(timer) })
+// }, 1000)

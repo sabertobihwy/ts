@@ -1,3 +1,4 @@
+import { SquareRule } from "../SquareRule";
 import { IViewer, Point } from "./type";
 
 export class Square {
@@ -7,6 +8,9 @@ export class Square {
     public set viewer(viewer: IViewer) {
         this._viewer = viewer
         this._viewer.show()
+    }
+    public get viewer(): IViewer | undefined {
+        return this._viewer
     }
     public get point() {
         return this._pointer
@@ -24,7 +28,4 @@ export class Square {
         this._color = color
     }
 }
-
-const s = new Square({ x: 1, y: 2 }, "red")
-s.point = { x: 2, y: 3 }
 
