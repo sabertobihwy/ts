@@ -61,6 +61,7 @@ export class SquareRule {
             const y = s.y + targetCenterPoint.y
             // console.log(`x=${x},y=${y},panelWidth=${panelLogicSize.width},panelHeight=${panelLogicSize.height}`)
             if (x <= -1 || x >= sizeType.width || y < 0 || y >= sizeType.height) {
+                //console.log(`x=${x},y=${y}`)
                 console.log("trigger return false")
                 return true
             }

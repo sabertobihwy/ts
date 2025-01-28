@@ -5,6 +5,7 @@ import { Direction, GameStatus, IGameViewer } from "./type";
 import { getRandomSquareGroup } from "./util";
 import { GameViewer } from "./viewer/GameViewer";
 import { nextContainerSize, panelLogicSize } from "./viewer/viewerConfig";
+import $ from 'jquery'
 
 export class Game {
     private status = GameStatus.INIT
@@ -12,6 +13,7 @@ export class Game {
     private next_group: SquareGroup
     private exist_group: Square[] = []
     private _viewer: IGameViewer
+    private _score: number = 0
     public timer?: number
 
     constructor() {
@@ -47,7 +49,9 @@ export class Game {
         this.next_group = this.generateNextGroup()
         // resetCenterpoint in curr 
         const xCenter = Math.floor(panelLogicSize.width / 2) - 1
-        const result = curr.setCenterpoint({ x: xCenter, y: curr.centerpoint.y }, this.exist_group, panelLogicSize)
+        const result = curr.setCenterpoint({ x: xCenter, y: curr.centerpoint.y }, this.exist_group, panelLogicSize, () => {
+            this.gameOver()
+        })
         //debugger
         console.log(result)
         this.curr_group = curr
@@ -59,6 +63,9 @@ export class Game {
     }
 
     start() {
+        if (this.status !== GameStatus.INIT && this.status !== GameStatus.PAUSED) {
+            return
+        }
         this.status = GameStatus.PLAYING
         // switch group 
         this.switchGroup()
@@ -102,19 +109,24 @@ export class Game {
         // 1. 保存已经存在的方块
         this.exist_group.push(...this.curr_group!.group)
         // 2. 消除方块
-        SquareRule.checkLineAndDelete(this.exist_group)
+        this._score += SquareRule.checkLineAndDelete(this.exist_group)
 
         // 3. 切换方块
         this.switchGroup()
-        this.showGroup()
-        this.autoDrop()
+        if (this.status !== GameStatus.END) {
+            this.showGroup()
+            this.autoDrop()
+        }
+
 
     }
 
     gameOver() {
         clearInterval(this.timer)
         this.status = GameStatus.END
-        console.log("over")
+        console.log("over," + this._score)
+        $("#showText").text("Game over," + this._score)
+
     }
 
     autoDrop() {
@@ -127,7 +139,7 @@ export class Game {
                 // 触底
                 this.hitBottom()
             })
-            console.log(this.curr_group!.centerpoint)
+            // console.log(this.curr_group!.centerpoint)
         }, 1000)
     }
 }
