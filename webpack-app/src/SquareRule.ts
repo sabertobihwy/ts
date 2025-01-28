@@ -72,6 +72,33 @@ export class SquareRule {
         return !(result || result2)
     }
 
+    static checkLineAndDelete(exist_group: Square[]): number {
+        const squareY: number[] = exist_group.map(e => e.point.y)
+        const minY = Math.min(...squareY)
+        const maxY = Math.max(...squareY)
+        let num = 0
+        for (let y = minY; y <= maxY; y++) {
+            const squareLine: Square[] = exist_group.filter(e => e.point.y === y)
+            if (squareLine.length === panelLogicSize.width) {
+                num++
+                // delete the line 
+                squareLine.forEach(squ => {
+                    squ.viewer!.remove()
+                    const idx = exist_group.indexOf(squ)
+                    exist_group.splice(idx, 1)
+                })
+                // y + 1 
+                const squareUp = exist_group.filter(e => e.point.y < y)
+                squareUp.forEach(squ => {
+                    squ.point = {
+                        x: squ.point.x,
+                        y: squ.point.y + 1
+                    }
+                })
+            }
+        }
+        return num
+    }
 
 
 }

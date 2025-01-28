@@ -5,8 +5,8 @@ export const singleSquare = {
 }
 
 export const panelLogicSize: SizeType = {
-    width: 300 / singleSquare.width,
-    height: 300 / singleSquare.height,
+    width: 150 / singleSquare.width,
+    height: 150 / singleSquare.height,
 }
 
 export interface SizeType {

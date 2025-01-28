@@ -42,7 +42,7 @@ export class LShape extends SquareGroup {
     }
     public rotate(): void {
         super.rotate()
-        this._clockWise = !this._clockWise
+        //this._clockWise = !this._clockWise
     }
 }
 

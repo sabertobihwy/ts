@@ -101,7 +101,10 @@ export class Game {
     hitBottom() {
         // 1. 保存已经存在的方块
         this.exist_group.push(...this.curr_group!.group)
-        // 2. 切换方块
+        // 2. 消除方块
+        SquareRule.checkLineAndDelete(this.exist_group)
+
+        // 3. 切换方块
         this.switchGroup()
         this.showGroup()
         this.autoDrop()
@@ -111,6 +114,7 @@ export class Game {
     gameOver() {
         clearInterval(this.timer)
         this.status = GameStatus.END
+        console.log("over")
     }
 
     autoDrop() {
