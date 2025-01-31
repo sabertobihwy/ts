@@ -12,5 +12,9 @@
   "devDependencies": {
     "reflect-metadata": "^0.2.2",
     "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
   }
 }
