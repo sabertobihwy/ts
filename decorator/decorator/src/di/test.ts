@@ -10,4 +10,4 @@ class Example {
 }
 
 console.log(Reflect.getMetadata("design:type", Example.prototype, "name")); // ✅ [Function: String]
-console.log(Reflect.getMetadata("design:type", Example.prototype, "age")); // ✅ [Function: Number]
+console.log(Reflect.getMetadata("design:type", Example.prototype, "age")); // undefined
