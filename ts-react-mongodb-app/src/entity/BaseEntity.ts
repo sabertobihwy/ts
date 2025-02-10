@@ -2,7 +2,7 @@ import { ClassConstructor, plainToInstance, Type } from 'class-transformer'
 import { validate } from 'class-validator'
 
 export abstract class BaseEntity {
-    public static baseTransform<T>(cls: ClassConstructor<T>, obj: Object): T {
+    protected static baseTransform<T>(cls: ClassConstructor<T>, obj: Object): T {
         if (obj instanceof cls) {
             return obj
         }

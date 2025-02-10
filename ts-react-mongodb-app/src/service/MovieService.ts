@@ -27,7 +27,7 @@ export class MovieService {
     }
 
     public static async editMovie(id: string, movie: any): Promise<string[]> {
-        const m: Movie = Movie.transformToMovie(movie)
+        const m: Movie = Movie.transformToMovie(movie) // 未符合的属性为undefined
         const result = await m.validate(true)
         if (result.length > 0) {
             return result
@@ -59,7 +59,7 @@ export class MovieService {
         return {
             data: list,
             errors: [],
-            count: 0
+            count: list.length
         }
 
     }
