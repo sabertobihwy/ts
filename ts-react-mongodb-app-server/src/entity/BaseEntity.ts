@@ -9,7 +9,7 @@ export abstract class BaseEntity {
         return plainToInstance(cls, obj)
     }
 
-    public async validate(skipIfNotExists = false): Promise<string[]> {
+    public async baseValidate(skipIfNotExists = false): Promise<string[]> {
         const error = await validate(this, {
             skipMissingProperties: skipIfNotExists
         })

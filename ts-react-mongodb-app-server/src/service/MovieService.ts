@@ -19,7 +19,7 @@ export class MovieService {
     // }
     public static async addMovie(movie: any): Promise<string[] | IMovie> {
         const m: Movie = Movie.transformToMovie(movie)
-        const result: string[] = await m.validate()
+        const result: string[] = await m.baseValidate()
         if (result.length === 0) {
             return await movieModeldb.create(m)
         }
@@ -28,7 +28,7 @@ export class MovieService {
 
     public static async editMovie(id: string, movie: any): Promise<string[]> {
         const m: Movie = Movie.transformToMovie(movie) // 未符合的属性为undefined
-        const result = await m.validate(true)
+        const result = await m.baseValidate(true)
         if (result.length > 0) {
             return result
         }
@@ -46,7 +46,7 @@ export class MovieService {
 
     public static async findByCond(cond: object): Promise<BaseResult<IMovie>> {
         const c: SearchCondition = SearchCondition.transformToCondition(cond)
-        const result = await c.validate()
+        const result = await c.baseValidate()
         if (result.length > 0) {
             return {
                 data: [],
