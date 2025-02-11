@@ -20,10 +20,28 @@ root.render(
 reportWebVitals();
 
 
-MovieService.addMovie({
-  name: "test01",
-  timeLong: 11,
-  types: ["12311", "12311", '12311'],
-  isHot: true,
-  areas: ["123"]
-}).then(console.log)
+// MovieService.addMovie({
+//   name: "test01",
+//   timeLong: 0,
+//   types: [],
+//   isHot: false,
+//   areas: []
+// }).then(console.log)
+//67a92ae86b54d95e45bb14a6
+// MovieService.editMovie({
+//   _id: "67a92ae86b54d95e45bb14a6",
+//   name: "CHANGE",
+//   timeLong: 11,
+//   types: ["12311", "12311", '12311'],
+//   isHot: true,
+//   areas: ["123"]
+// }).then(console.log)
+
+// MovieService.findMovieById("67a92ae86b54d95e45bb14a6")
+//   .then(console.log)
+
+// MovieService.findMovieByCond({
+//   page: 2
+// }).then(console.log)
+
+// MovieService.delMovie("67a92ae86b54d95e45bb14a6").then(console.log)

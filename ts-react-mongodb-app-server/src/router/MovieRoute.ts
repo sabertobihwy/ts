@@ -37,7 +37,7 @@ router.put('/:id', async (req, res) => {
         if (result.length > 0) {
             ResponseHelper.sendError(result, res)
         } else {
-            ResponseHelper.sendData(result, res)
+            ResponseHelper.sendData(null, res)
         }
     } catch (error) {
         ResponseHelper.sendError('id is invalid', res)
