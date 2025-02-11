@@ -3,10 +3,19 @@ import { Movie } from './entity/Movie'
 import { MovieService } from './service/MovieService'
 import Express from 'express'
 import { router } from './router/MovieRoute'
+import { uploadRouter } from './router/uploadRoute'
+import path from 'path'
+
 
 const app = Express()
+
+
 app.use(Express.json())
+
+app.use('/static/upload', Express.static(path.resolve(__dirname, './public/uploads')))
+
 app.use('/api/movies', router)
+app.use('/upload', uploadRouter)
 
 app.listen(3000)
 
