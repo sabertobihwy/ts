@@ -10,7 +10,7 @@ router.get('/:id', async (req, res) => {
         const result = await MovieService.findById(id)
         ResponseHelper.sendData(result, res)
     } catch {
-        ResponseHelper.sendData(null, res)
+        ResponseHelper.sendError("id is invalid", res)
     }
 
 })

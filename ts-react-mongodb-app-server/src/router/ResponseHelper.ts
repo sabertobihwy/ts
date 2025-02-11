@@ -1,5 +1,5 @@
 import { Response } from 'express'
-import { BaseResult } from '../entity/BaseResult'
+import { PageResult } from '../entity/PageResult'
 
 export class ResponseHelper {
     public static sendError(error: string | string[], res: Response) {
@@ -22,7 +22,7 @@ export class ResponseHelper {
         })
     }
 
-    public static sendPaginationResult<T>(result: BaseResult<T>, res: Response) {
+    public static sendPaginationResult<T>(result: PageResult<T>, res: Response) {
         if (result.errors.length > 0) {
             ResponseHelper.sendError(result.errors, res)
         } else {

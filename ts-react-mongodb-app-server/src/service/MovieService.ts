@@ -1,5 +1,5 @@
 import { movieModeldb } from "../db/dbConnection";
-import { BaseResult } from "../entity/BaseResult";
+import { PageResult } from "../entity/PageResult";
 import { Movie } from "../entity/Movie";
 import { SearchCondition } from "../entity/SearchCondition";
 import { IMovie } from "../interface/IMovie";
@@ -44,7 +44,7 @@ export class MovieService {
         return await movieModeldb.findById({ _id: id })
     }
 
-    public static async findByCond(cond: object): Promise<BaseResult<IMovie>> {
+    public static async findByCond(cond: object): Promise<PageResult<IMovie>> {
         const c: SearchCondition = SearchCondition.transformToCondition(cond)
         const result = await c.baseValidate()
         if (result.length > 0) {
