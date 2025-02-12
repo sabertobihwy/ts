@@ -10,7 +10,7 @@ export interface IResponseData<T> {
 }
 
 export interface IResponsePage<T> {
-    data: T,
+    data: T[],
     error: string,
     total: number
 }
