@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { IResponseData, IResponseError } from '../interface/CommonTypes'
+import { IResponseData, IResponseError, IResponsePage } from '../interface/CommonTypes'
 import { IMovie } from '../interface/IMovie'
 import { ISearchCond } from '../interface/ISearchCond'
 
@@ -16,7 +16,7 @@ export class MovieService {
         const { data } = await axios.get(`/api/movies/${_id}`)
         return data
     }
-    public static async findMovieByCond(cond: ISearchCond): Promise<IResponseError | IResponseData<IMovie>> {
+    public static async findMovieByCond(cond: ISearchCond): Promise<IResponsePage<IMovie>> {
         const { data } = await axios.get('/api/movies', { params: cond })
         return data
     }

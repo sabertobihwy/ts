@@ -1,6 +1,6 @@
 import { IMovie } from "../../interface/IMovie"
 import { ISearchCond } from "../../interface/ISearchCond"
-import { Action, Reducer } from "redux"
+import { Action, combineReducers, Reducer } from "redux"
 import { ActionType } from "../action/CreateAction"
 
 
@@ -26,7 +26,7 @@ const initState: IMovieState = {
 
 type MovieReducer<A extends Action> = Reducer<IMovieState, A>
 
-export const reducer: MovieReducer<ActionType> = function (prevS: IMovieState = initState, action: ActionType) {
+const movieReducer: MovieReducer<ActionType> = function (prevS: IMovieState = initState, action: ActionType) {
     switch (action.type) {
         case 'add_movie':
             return {
@@ -58,3 +58,7 @@ export const reducer: MovieReducer<ActionType> = function (prevS: IMovieState = 
             return prevS
     }
 }
+
+export const rootReducer = combineReducers({
+    movieReducer
+})

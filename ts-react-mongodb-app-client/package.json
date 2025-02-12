@@ -42,7 +42,10 @@
     ]
   },
   "devDependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
+    "@types/redux-logger": "^3.0.13",
     "axios": "^1.7.9",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "redux-logger": "^3.0.6"
   }
 }

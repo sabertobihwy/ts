@@ -12,7 +12,7 @@ export type AddMovieAction = IAction<'add_movie', {
     movies: IMovie[],
     total: number
 }>
-export function createAddMovieAction(movies: IMovie[], total: number): AddMovieAction {
+function createAddMovieAction(movies: IMovie[], total: number): AddMovieAction {
     return {
         type: 'add_movie',
         payload: {
@@ -22,23 +22,30 @@ export function createAddMovieAction(movies: IMovie[], total: number): AddMovieA
     }
 }
 export type DelMovieAction = IAction<'del_movie', string>
-export function createDelMovieAction(id: string): DelMovieAction {
+function createDelMovieAction(id: string): DelMovieAction {
     return {
         type: 'del_movie',
         payload: id
     }
 }
 export type SetLoadAction = IAction<'set_loading', boolean>
-export function createLoadingAction(flag: boolean): SetLoadAction {
+function createLoadingAction(flag: boolean): SetLoadAction {
     return {
         type: 'set_loading',
         payload: flag
     }
 }
 export type SetCondAction = IAction<'set_cond', ISearchCond>
-export function createSetCondAction(cond: ISearchCond): SetCondAction {
+function createSetCondAction(cond: ISearchCond): SetCondAction {
     return {
         type: 'set_cond',
         payload: cond
     }
+}
+
+export const createAction = {
+    createAddMovieAction,
+    createDelMovieAction,
+    createLoadingAction,
+    createSetCondAction
 }
