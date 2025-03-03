@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import { MovieService } from './service/MovieService';
 import { store } from './redux/store';
 import { createAction } from './redux/action/CreateAction';
+import './index.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,8 +15,6 @@ root.render(
   </React.StrictMode>
 );
 
-
-reportWebVitals();
 
 // --- test axios
 // MovieService.addMovie({
@@ -48,14 +45,21 @@ reportWebVitals();
 
 // --- test reducer 
 
-MovieService.findMovieByCond({
-  page: 2
-}).then(list => {
-  if ('total' in list) {
-    store.dispatch(createAction.createSetCondAction({ page: 2 }))
-    store.dispatch(createAction.createAddMovieAction(list.data, list.total))
-    // console.log(list)
-  }
-})
+// MovieService.findMovieByCond({
+//   page: 2
+// }).then(list => {
+//   if ('total' in list) {
+//     store.dispatch(createAction.createSetCondAction({ page: 2 }))
+//     store.dispatch(createAction.createAddMovieAction(list.data, list.total))
+//     // console.log(list)
+//   }
+// })
 
 
+// store.dispatch(createAction.fetchMovies({
+//   key: "电"
+// }))
+
+// store.dispatch(createAction.deleteMovie({
+//   page: 2
+// }))

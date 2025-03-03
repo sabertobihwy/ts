@@ -1,6 +1,6 @@
 import { IMovie } from "../../interface/IMovie"
 import { ISearchCond } from "../../interface/ISearchCond"
-import { Action, combineReducers, Reducer } from "redux"
+import { Action, Reducer } from "redux"
 import { ActionType } from "../action/CreateAction"
 
 
@@ -11,6 +11,7 @@ export interface IMovieState {
     searchCondition: ISearchCondRequired,
     total: number
     isLoading: boolean
+    totalPage: number
 }
 
 const initState: IMovieState = {
@@ -21,25 +22,28 @@ const initState: IMovieState = {
         key: ""
     },
     total: 0,
-    isLoading: false
+    isLoading: false,
+    totalPage: 0
 }
 
-type MovieReducer<A extends Action> = Reducer<IMovieState, A>
+export type MovieReducer<A extends Action> = Reducer<IMovieState, A>
 
-const movieReducer: MovieReducer<ActionType> = function (prevS: IMovieState = initState, action: ActionType) {
+export const movieReducer: MovieReducer<ActionType> = function (prevS: IMovieState = initState, action: ActionType) {
     switch (action.type) {
         case 'add_movie':
             return {
                 ...prevS,
                 data: action.payload.movies,
-                total: action.payload.total
+                total: action.payload.total,
+                totalPage: Math.ceil(action.payload.total / prevS.searchCondition.limit)
             }
 
         case 'del_movie':
             return {
                 ...prevS,
                 data: prevS.data.filter(d => d._id! !== action.payload),
-                total: prevS.total - 1
+                total: prevS.total - 1,
+                totalPage: Math.ceil((prevS.total - 1) / prevS.searchCondition.limit)
             }
         case 'set_loading':
             return {
@@ -53,12 +57,10 @@ const movieReducer: MovieReducer<ActionType> = function (prevS: IMovieState = in
                     ...prevS.searchCondition,
                     ...action.payload
                 }
+
+
             }
         default:
             return prevS
     }
 }
-
-export const rootReducer = combineReducers({
-    movieReducer
-})

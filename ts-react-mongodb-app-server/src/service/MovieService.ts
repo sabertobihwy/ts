@@ -54,12 +54,14 @@ export class MovieService {
                 count: 0
             }
         }
+        const total = await movieModeldb.find({ name: { $regex: new RegExp(c.key) } })
+            .countDocuments()
         const list = await movieModeldb.find({ name: { $regex: new RegExp(c.key) } })
             .skip((c.page - 1) * c.limit).limit(c.limit)
         return {
             data: list,
             errors: [],
-            count: list.length
+            count: total
         }
 
     }

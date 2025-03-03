@@ -1,5 +1,8 @@
+import { ThunkAction } from "@reduxjs/toolkit";
 import { IMovie } from "../../interface/IMovie";
 import { ISearchCond } from "../../interface/ISearchCond";
+import { IRootState } from "../reducer/IRootReducer";
+import { MovieService } from "../../service/MovieService";
 
 export interface IAction<T extends string, P> {
     type: T,
@@ -43,9 +46,34 @@ function createSetCondAction(cond: ISearchCond): SetCondAction {
     }
 }
 
+function fetchMovies(conditions: ISearchCond): ThunkAction<Promise<void>, IRootState, any, ActionType> {
+    return async (dispatch, getState) => {
+        dispatch(createLoadingAction(true))
+        dispatch(createSetCondAction(conditions))
+        const cond = getState().movie.searchCondition
+        const result = await MovieService.findMovieByCond(cond)
+        dispatch(createAddMovieAction(result.data, result.total))
+        dispatch(createLoadingAction(false))
+    }
+}
+
+function deleteMovie(id: string): ThunkAction<Promise<void>, IRootState, any, ActionType> {
+    return async (dispatch) => {
+        dispatch(createLoadingAction(true))
+        const result = await MovieService.delMovie(id)
+        if (result.error === '') {
+            dispatch(createDelMovieAction(id))
+        }
+        dispatch(createLoadingAction(false))
+    }
+}
+
 export const createAction = {
     createAddMovieAction,
     createDelMovieAction,
     createLoadingAction,
-    createSetCondAction
+    createSetCondAction,
+    fetchMovies,
+    deleteMovie
+
 }
