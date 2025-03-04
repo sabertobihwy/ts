@@ -23,6 +23,15 @@ function mapDispatchToProps(dispatch: Dispatch<ActionType>): EventState {
                 field: type,
                 checked
             }) as any)
+        },
+        onPageChange: (page, pageSize) => {
+            dispatch(createAction.fetchMovies({
+                page,
+                limit: pageSize
+            }) as any)
+        },
+        onDelete: async (id: string) => {
+            await dispatch(createAction.deleteMovie(id) as any)
         }
     }
 }

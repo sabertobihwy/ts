@@ -80,10 +80,14 @@ function fetchMovies(conditions: ISearchCond): ThunkAction<Promise<void>, IRootS
     return async (dispatch, getState) => {
         dispatch(createLoadingAction(true))
         dispatch(createSetCondAction(conditions))
-        const cond = getState().movie.searchCondition
-        const result = await MovieService.findMovieByCond(cond)
-        dispatch(createAddMovieAction(result.data, result.total))
-        dispatch(createLoadingAction(false))
+        setTimeout(async () => {
+            const cond = getState().movie.searchCondition
+            const result = await MovieService.findMovieByCond(cond)
+            dispatch(createAddMovieAction(result.data, result.total))
+            dispatch(createLoadingAction(false))
+        }, 2000)
+
+
     }
 }
 

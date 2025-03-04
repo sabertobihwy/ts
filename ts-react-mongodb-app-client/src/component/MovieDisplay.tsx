@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
-import { Space, Table, Tag, Switch } from 'antd';
+import { Space, Table, Tag, Switch, TablePaginationConfig, Button, Flex, Popconfirm, message } from 'antd';
 import { IMovieState } from '../redux/reducer/MovieReducer';
 import { SwtichTypes } from '../interface/CommonTypes';
 import { IMovie } from '../interface/IMovie';
+import { NavLink } from 'react-router';
 
 const { Column } = Table;
 
 export interface EventState {
     onLoading: () => void,
     onSwitchChange: (checked: boolean, type: SwtichTypes, id: string) => void
+    onPageChange: (page: number, pageSize: number) => void
+    onDelete: (id: string) => Promise<void>
 }
 
 export default class MovieDisplay extends Component<IMovieState & EventState> {
@@ -17,12 +20,31 @@ export default class MovieDisplay extends Component<IMovieState & EventState> {
         this.props.onLoading()
     }
 
-    render() {
-        if (this.props.isLoading) {
-            return <p>数据加载中...</p>;
+    getPagination(): false | TablePaginationConfig {
+        if (this.props.total === 0) {
+            return false
         }
+        return {
+            position: ['bottomRight'],
+            onChange: this.props.onPageChange,
+            total: this.props.total,
+            current: this.props.searchCondition.page,
+            pageSize: this.props.searchCondition.limit
+        }
+    }
+    async onDelete(id: string) {
+        await this.props.onDelete(id)
+        message.error('delete success');
+    }
+
+    render() {
         return (
-            <Table dataSource={this.props.data}>
+            <Table rowKey={"_id"}
+                dataSource={this.props.data}
+                loading={this.props.isLoading}
+                pagination={this.getPagination()}
+            //  onChange={this.props.onPageChange}
+            >
                 <Column title="Name" dataIndex="name" key="name"
 
                 />
@@ -46,37 +68,36 @@ export default class MovieDisplay extends Component<IMovieState & EventState> {
                         }} />
                     )}
                 />
-                {/* <Column
-                    title="Tags"
-                    dataIndex="tags"
-                    key="tags"
-                    render={(tags) => (
-                        <>
-                            {tags.map((tag) => {
-                                let color = tag.length > 5 ? 'geekblue' : 'green';
-                                if (tag === 'loser') {
-                                    color = 'volcano';
-                                }
-                                return (
-                                    <Tag color={color} key={tag}>
-                                        {tag.toUpperCase()}
-                                    </Tag>
-                                );
-                            })}
-                        </>
-                    )}
+                <Column title="Operation" dataIndex="Operation" key="Operation"
+                    render={(_, record: IMovie) => (
+                        <Flex gap="small" wrap>
+                            <NavLink to={'/movie/edit/' + record._id} >
+                                <Button type="primary" size={'small'}>
+                                    edit
+                                </Button>
+                            </NavLink>
+                            <Popconfirm
+                                title="Delete the task"
+                                description="Are you sure to delete this task?"
+                                onConfirm={this.onDelete.bind(this, record._id!)}
+                                onCancel={() => { }}
+                                okText="Yes"
+                                cancelText="No"
+
+
+                            >
+                                <Button type="default" danger size={'small'}
+                                >
+                                    del
+                                </Button>
+                            </Popconfirm>
+
+                        </Flex>
+                    )
+                    }
                 />
-                <Column
-                    title="Action"
-                    key="action"
-                    render={(_, record) => (
-                        <Space size="middle">
-                            <a>Invite {record.lastName}</a>
-                            <a>Delete</a>
-                        </Space>
-                    )}
-                /> */}
-            </Table>
+
+            </Table >
         );
     }
 }
