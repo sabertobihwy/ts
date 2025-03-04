@@ -3,13 +3,14 @@ import { IMovie } from "../../interface/IMovie";
 import { ISearchCond } from "../../interface/ISearchCond";
 import { IRootState } from "../reducer/IRootReducer";
 import { MovieService } from "../../service/MovieService";
+import { SwitchTypePayload, SwtichTypes } from "../../interface/CommonTypes";
 
 export interface IAction<T extends string, P> {
     type: T,
     payload: P
 }
 
-export type ActionType = AddMovieAction | DelMovieAction | SetLoadAction | SetCondAction
+export type ActionType = SwitchTypeAction | AddMovieAction | DelMovieAction | SetLoadAction | SetCondAction
 
 export type AddMovieAction = IAction<'add_movie', {
     movies: IMovie[],
@@ -46,6 +47,35 @@ function createSetCondAction(cond: ISearchCond): SetCondAction {
     }
 }
 
+export type SwitchTypeAction = IAction<'switch_type', IMovie[]>
+function createSwitchTypeAction(data: IMovie[]): SwitchTypeAction {
+    return {
+        type: 'switch_type',
+        payload: data
+    }
+}
+
+function switchMovieTypeAsync(switchp: SwitchTypePayload): ThunkAction<Promise<void>, IRootState, any, ActionType> {
+    return async (dispatch, getState) => {
+        const { id, field, checked } = switchp
+        const data = getState().movie.data
+        const oldMov = data.find(m => m._id === id)!
+        const newMov = {
+            ...oldMov,
+            [field]: checked
+        }
+        const newData = data.map(m => {
+            if (m._id === id) {
+                return newMov
+            }
+            return m
+        })
+        dispatch(createAction.createSwitchTypeAction(newData))
+        await MovieService.editMovie(newMov)
+    }
+}
+
+
 function fetchMovies(conditions: ISearchCond): ThunkAction<Promise<void>, IRootState, any, ActionType> {
     return async (dispatch, getState) => {
         dispatch(createLoadingAction(true))
@@ -74,6 +104,8 @@ export const createAction = {
     createLoadingAction,
     createSetCondAction,
     fetchMovies,
-    deleteMovie
+    deleteMovie,
+    createSwitchTypeAction,
+    switchMovieTypeAsync
 
 }

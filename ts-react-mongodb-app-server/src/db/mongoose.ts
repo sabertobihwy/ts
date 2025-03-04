@@ -6,7 +6,8 @@ const schema = new mongoose.Schema<IMovie>({
     types: [String],
     areas: [String],
     timeLong: Number,
-    isHot: Boolean
+    isHot: Boolean,
+    isClassic: { type: Boolean, default: false }
 }, { versionKey: false, strict: false })
 
 const movieModel = mongoose.model<IMovie>("Movie", schema)

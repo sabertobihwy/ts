@@ -5,5 +5,6 @@ export interface IMovie {
     areas: string[]
     timeLong: number
     isHot: boolean
+    isClassic: boolean
     _id?: string
 }

@@ -14,3 +14,14 @@ export interface IResponsePage<T> {
     error: string,
     total: number
 }
+
+export enum SwtichTypes {
+    isHot = 'isHot',
+    isClassic = 'isClassic'
+}
+
+export interface SwitchTypePayload {
+    id: string,
+    field: SwtichTypes,
+    checked: boolean
+}

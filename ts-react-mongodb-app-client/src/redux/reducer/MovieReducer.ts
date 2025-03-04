@@ -57,8 +57,11 @@ export const movieReducer: MovieReducer<ActionType> = function (prevS: IMovieSta
                     ...prevS.searchCondition,
                     ...action.payload
                 }
-
-
+            }
+        case 'switch_type':
+            return {
+                ...prevS,
+                data: action.payload
             }
         default:
             return prevS

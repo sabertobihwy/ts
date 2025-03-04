@@ -24,6 +24,7 @@ app.listen(3000)
 //     timeLong: 11,
 //     types: ["12311", "12311", '12311'],
 //     isHot: true,
+//     isClassic: true,
 //     areas: ["123"]
 // }
 // const b = {
@@ -37,13 +38,14 @@ function getRandom(min: number, max: number): number {
 
 // for (let i = 0; i < 10; i++) {
 //     const a = {
-//         name: "电影" + i,
+//         name: "哪吒" + i,
 //         timeLong: getRandom(10, 50),
-//         types: ["喜剧", "action"],
+//         types: ["科幻", "亲子"],
 //         isHot: true,
-//         areas: ["china", "NA"]
+//         isClassic: true,
+//         areas: ["USA", "CA"]
 //     }
-//     // MovieService.addMovie(a).then(resp => console.log(resp))
+//     MovieService.addMovie(a).then(resp => console.log(resp))
 // }
 
 //MovieService.findByCond({ limit: 10.1 }).then(console.log)

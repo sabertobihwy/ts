@@ -3,16 +3,20 @@
 }
 
 .sider{
+    /* position: fixed; */
     color: aquamarine;
 }
 
 .container{
+    position: fixed;
     width: 100vw;
     height: 100vh;
 }
 
 .content{
     padding: 10px;
+    height: 100%;
+    overflow: scroll;
 }
 
 body{

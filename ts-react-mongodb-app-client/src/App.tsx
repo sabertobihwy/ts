@@ -5,19 +5,23 @@ import Home from './pages/home';
 import MovieList from './pages/movieList/MovieList';
 import Addmovie from './pages/movieList/Addmovie';
 import EditMovie from './pages/movieList/EditMovie';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />} >
-          <Route index element={<Home />} />
-          <Route path="movie" element={<MovieList />} />
-          <Route path="movie/add" element={<Addmovie />} />
-          <Route path="movie/edit/:id" element={<EditMovie />} />
-        </Route>
-      </Routes>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />} >
+            <Route index element={<Home />} />
+            <Route path="movie" element={<MovieList />} />
+            <Route path="movie/add" element={<Addmovie />} />
+            <Route path="movie/edit/:id" element={<EditMovie />} />
+          </Route>
+        </Routes>
+      </Router>
+    </Provider>
   );
 }
 

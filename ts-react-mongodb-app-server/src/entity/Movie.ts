@@ -3,6 +3,7 @@ import { IsArray, IsNotEmpty, IsString, Min, MinLength, Max, MaxLength, validate
 import 'class-transformer'
 import { plainToInstance, Type } from 'class-transformer'
 import { BaseEntity } from './BaseEntity'
+import { BooleanExpression } from 'mongoose'
 
 export class Movie extends BaseEntity {
     public static transformToMovie(obj: Object): Movie {
@@ -30,5 +31,9 @@ export class Movie extends BaseEntity {
     @IsNotEmpty({ message: "should not be empty" })
     @Type(() => Boolean)
     isHot: boolean
+    @IsNotEmpty({ message: "should not be empty" })
+    @Type(() => Boolean)
+    isClassic: boolean
+
 
 }
