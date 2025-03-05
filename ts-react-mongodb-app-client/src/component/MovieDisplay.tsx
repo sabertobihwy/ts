@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { Space, Table, Tag, Switch, TablePaginationConfig, Button, Flex, Popconfirm, message } from 'antd';
+import { Space, Table, Input, Switch, TablePaginationConfig, Button, Flex, Popconfirm, message } from 'antd';
+import type { FilterDropdownProps } from 'antd/es/table/interface';
+import { FileSearchOutlined, SearchOutlined } from '@ant-design/icons';
 import { IMovieState } from '../redux/reducer/MovieReducer';
 import { SwtichTypes } from '../interface/CommonTypes';
 import { IMovie } from '../interface/IMovie';
@@ -12,6 +14,9 @@ export interface EventState {
     onSwitchChange: (checked: boolean, type: SwtichTypes, id: string) => void
     onPageChange: (page: number, pageSize: number) => void
     onDelete: (id: string) => Promise<void>
+    onKeyChange: (key: string) => void
+    onSearch: () => void
+    onReset: () => void
 }
 
 export default class MovieDisplay extends Component<IMovieState & EventState> {
@@ -37,16 +42,57 @@ export default class MovieDisplay extends Component<IMovieState & EventState> {
         message.error('delete success');
     }
 
+    private getFilterDropDown({ close }: FilterDropdownProps) {
+        return (
+            <div style={{ padding: 8 }} onKeyDown={(e) => e.stopPropagation()}>
+                <Input
+                    value={this.props.searchCondition.key}
+                    onChange={(e) => { this.props.onKeyChange(e.target.value) }}
+                    onPressEnter={() => { }}
+                    style={{ marginBottom: 8, display: 'block' }}
+                />
+                <Space>
+                    <Button
+                        type="primary"
+                        onClick={this.props.onSearch.bind(this)}
+                        icon={<FileSearchOutlined />}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={this.props.onReset.bind(this)}
+                        size="small"
+                        style={{ width: 90 }}
+                    >
+                        Reset
+                    </Button>
+                    <Button
+                        type="link"
+                        size="small"
+                        onClick={() => {
+                            close();
+                        }}
+                    >
+                        close
+                    </Button>
+                </Space>
+            </div>
+        )
+    }
+
+
     render() {
         return (
             <Table rowKey={"_id"}
                 dataSource={this.props.data}
                 loading={this.props.isLoading}
                 pagination={this.getPagination()}
-            //  onChange={this.props.onPageChange}
             >
                 <Column title="Name" dataIndex="name" key="name"
-
+                    filterDropdown={this.getFilterDropDown.bind(this)}
+                    filterIcon={<SearchOutlined />}
                 />
                 <Column title="areas" dataIndex="areas" key="areas"
                     render={(tags: string[]) => (
@@ -83,14 +129,14 @@ export default class MovieDisplay extends Component<IMovieState & EventState> {
                                 onCancel={() => { }}
                                 okText="Yes"
                                 cancelText="No"
-
-
                             >
                                 <Button type="default" danger size={'small'}
                                 >
                                     del
                                 </Button>
                             </Popconfirm>
+
+
 
                         </Flex>
                     )

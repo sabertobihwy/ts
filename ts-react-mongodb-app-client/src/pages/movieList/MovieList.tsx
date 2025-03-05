@@ -32,6 +32,20 @@ function mapDispatchToProps(dispatch: Dispatch<ActionType>): EventState {
         },
         onDelete: async (id: string) => {
             await dispatch(createAction.deleteMovie(id) as any)
+        },
+        onKeyChange: (key: string) => {
+            dispatch(createAction.createSetCondAction({ key }))
+        },
+        onSearch: () => {
+            dispatch(createAction.fetchMovies({
+                page: 1
+            }) as any)
+        },
+        onReset: () => {
+            dispatch(createAction.createSetCondAction({ key: "" }))
+            dispatch(createAction.fetchMovies({
+                page: 1
+            }) as any)
         }
     }
 }
