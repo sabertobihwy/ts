@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import UploadDisplay from '../component/UploadDisplay'
 
 export default class Home extends Component {
     render() {
         return (
-            <div>
-                <h1>Home</h1>
-            </div>
+            <UploadDisplay url={'/static/upload/1741227051797.jpg'} onSucess={() => {
+                console.log(123)
+            }}></UploadDisplay>
         )
     }
 }
