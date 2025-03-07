@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { PlusOutlined } from '@ant-design/icons';
 import { Image, message, Upload } from 'antd';
 import type { GetProp, UploadFile, UploadProps } from 'antd';
-import type { UploadRequestOption as RcCustomRequestOptions } from 'rc-upload/lib/interface';
-import { createImportSpecifier } from 'typescript';
+
 
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -24,15 +23,16 @@ const uploadButton = (
 );
 
 export interface IUploadParams {
-    onSucess: () => void
-    url?: string
+    id?: string,
+    onChange?: (url: string) => void // onChange是赋值
+    value?: string
 }
 
-export default function UploadDisplay({ url, onSucess }: IUploadParams) {
+export default function UploadDisplay({ id, value, onChange }: IUploadParams) {
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [fileList, setFileList] = useState<UploadFile[]>(() =>
-        url ? [{ uid: url, name: url, thumbUrl: `http://localhost:3000${url}` }] : []
+        value ? [{ uid: value, name: value, thumbUrl: `http://localhost:3000${value}` }] : []
     );
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -51,14 +51,17 @@ export default function UploadDisplay({ url, onSucess }: IUploadParams) {
     };
 
     const handleChange: UploadProps['onChange'] = ({ fileList: newFileList }) => {
-        console.log(newFileList[0].status)
-        if (newFileList[0].status === 'done') {
+        console.log(newFileList[0]?.status)
+        if (newFileList[0]?.status === 'done') {
             if (newFileList[0]?.response?.error !== "") {
                 error()
             } else {
                 success()
-                onSucess()
-                console.log(newFileList[0]?.response?.data.url)
+                value = newFileList[0]?.response?.data.url
+                console.log(value)
+                onChange && onChange(value!)
+                //onSucess(newFileList[0]?.response?.data.url)
+                //console.log(newFileList[0]?.response?.data.url)
             }
         }
 
@@ -97,6 +100,7 @@ export default function UploadDisplay({ url, onSucess }: IUploadParams) {
     return (
         <>
             <Upload
+                id={id}
                 name="avatar"
                 accept=".jpg,.png"
                 action="/upload"
@@ -110,6 +114,7 @@ export default function UploadDisplay({ url, onSucess }: IUploadParams) {
             </Upload>
             {previewImage && (
                 <Image
+
                     wrapperStyle={{ display: 'none' }}
                     preview={{
                         visible: previewOpen,

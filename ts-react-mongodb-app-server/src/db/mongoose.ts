@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { IMovie } from "../interface/IMovie";
 
 const schema = new mongoose.Schema<IMovie>({
+    imgUrl: String,
     name: String,
     types: [String],
     areas: [String],

@@ -34,6 +34,10 @@ export class Movie extends BaseEntity {
     @IsNotEmpty({ message: "should not be empty" })
     @Type(() => Boolean)
     isClassic: boolean
+    @Type(() => String)
+    imgUrl: string
+
+
 
 
 }
