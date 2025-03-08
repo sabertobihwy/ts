@@ -1,5 +1,5 @@
 export interface IMovie {
-
+    imgUrl: string,
     name: string
     types: string[]
     areas: string[]

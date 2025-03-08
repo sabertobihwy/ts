@@ -7,6 +7,9 @@ import Addmovie from './pages/movieList/Addmovie';
 import EditMovie from './pages/movieList/EditMovie';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import { MovieService } from './service/MovieService';
+import { IResponseData, IResponseError } from './interface/CommonTypes';
+import { IMovie } from './interface/IMovie';
 
 function App() {
   return (
@@ -16,7 +19,14 @@ function App() {
           <Route path="/" element={<Layout />} >
             <Route index element={<Home />} />
             <Route path="movie" element={<MovieList />} />
-            <Route path="movie/add" element={<Addmovie />} />
+            <Route path="movie/add" element={<Addmovie onFinish={async (values, success, error) => {
+              const res: IResponseError | IResponseData<IMovie> = await MovieService.addMovie(values)
+              if (res.error !== "") {
+                error(res.error)
+              } else {
+                success("add success")
+              }
+            }} />} />
             <Route path="movie/edit/:id" element={<EditMovie />} />
           </Route>
         </Routes>

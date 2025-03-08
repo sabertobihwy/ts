@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { FormProps } from 'antd';
 import { Button, Checkbox, Form, Input, InputNumber, Switch, message } from 'antd';
 import { IMovie } from '../../interface/IMovie';
@@ -7,14 +7,14 @@ import { MovieService } from '../../service/MovieService';
 import { IResponseData, IResponseError } from '../../interface/CommonTypes'
 
 
-const types = [
+const typesOptions = [
     { label: 'comic', value: '喜剧' },
     { label: 'action', value: '动作' },
     { label: 'love', value: '爱情' },
     { label: 'wenyi', value: '文艺' },
 ];
 
-const areas = [
+const areasOptions = [
     { label: 'USA', value: 'USA' },
     { label: 'UK', value: 'UK' },
     { label: 'AF', value: 'AF' },
@@ -25,7 +25,22 @@ const areas = [
 //     console.log('checked = ', checkedValues);
 // };
 
-const AddMovie: React.FC = ({ }) => {
+export interface AddEdit {
+    onFinish?: (values: IMovie, success: Function, error: Function) => Promise<void>
+}
+
+
+const AddMovie: React.FC<Partial<IMovie> & AddEdit> = ({ name, types, areas, timeLong, isHot, isClassic, imgUrl, onFinish }) => {
+    const [form] = Form.useForm(); // 创建 form 实例
+
+    // 监听 props 变化，手动更新表单值
+    useEffect(() => {
+        const currentValues = form.getFieldsValue();
+        if (currentValues.imgUrl !== imgUrl) {
+            form.setFieldsValue({ name, types, areas, timeLong, isHot, isClassic, imgUrl });
+        }
+    }, [name, types, areas, timeLong, isHot, isClassic, imgUrl, form]);
+
     const [messageApi, contextHolder] = message.useMessage();
     const success = (msg: string) => {
         messageApi.open({
@@ -41,15 +56,9 @@ const AddMovie: React.FC = ({ }) => {
         });
     };
 
-    const onFinish: FormProps<IMovie>['onFinish'] = async (values) => {
+    const handleFinish: FormProps<IMovie>['onFinish'] = async (values) => {
         console.log('Success:', values);
-        const res: IResponseError | IResponseData<IMovie> = await MovieService.addMovie(values)
-        console.log(res)
-        if (res.error !== "") {
-            error(res.error)
-        } else {
-            success("add success")
-        }
+        onFinish && onFinish(values, success, error)
     };
 
     const onFinishFailed: FormProps<IMovie>['onFinishFailed'] = (errorInfo) => {
@@ -59,12 +68,13 @@ const AddMovie: React.FC = ({ }) => {
     return (
 
         <Form
+            form={form}
             name="basic"
             labelCol={{ span: 8, offset: 0 }}
             wrapperCol={{ span: 10 }}
             style={{ maxWidth: 400, marginTop: 20 }}
-            initialValues={{ isHot: true, isClassic: false }}
-            onFinish={onFinish}
+            initialValues={{ name, types, areas, timeLong, isHot, isClassic, imgUrl }}
+            onFinish={handleFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
         >
@@ -77,19 +87,19 @@ const AddMovie: React.FC = ({ }) => {
             </Form.Item>
 
             <Form.Item label="Avatar" name="imgUrl" >
-                <UploadDisplay></UploadDisplay>
+                <UploadDisplay ></UploadDisplay>
             </Form.Item>
 
             <Form.Item<IMovie> label="types" name="types" >
                 <Checkbox.Group
-                    options={types}
+                    options={typesOptions}
                 // onChange={onChange}
                 />
             </Form.Item>
 
             <Form.Item<IMovie> name="areas" label="areas" >
                 <Checkbox.Group
-                    options={areas}
+                    options={areasOptions}
                 //  onChange={onChange}
                 />
             </Form.Item>

@@ -34,6 +34,21 @@ export default function UploadDisplay({ id, value, onChange }: IUploadParams) {
     const [fileList, setFileList] = useState<UploadFile[]>(() =>
         value ? [{ uid: value, name: value, thumbUrl: `http://localhost:3000${value}` }] : []
     );
+    useEffect(() => {
+        setFileList((prevFileList) => {
+            if (prevFileList.length > 0 && prevFileList[0].uid === value) {
+                return prevFileList; // 不变就不更新
+            }
+            return value ? [{ uid: value, name: value, thumbUrl: `http://localhost:3000${value}` }] : [];
+        });
+    }, [value]);
+
+    // useEffect(() => {
+    //     if (value) {
+    //         setFileList([{ uid: value, name: value, thumbUrl: `http://localhost:3000${value}` }]);
+    //     }
+    // }, [value]); // 监听 value 变化
+
     const [messageApi, contextHolder] = message.useMessage();
 
     const success = () => {
@@ -58,8 +73,8 @@ export default function UploadDisplay({ id, value, onChange }: IUploadParams) {
             } else {
                 success()
                 value = newFileList[0]?.response?.data.url
-                console.log(value)
-                onChange && onChange(value!)
+                // console.log(value)
+                //onChange && onChange(newFileList[0]?.response?.data.url)
                 //onSucess(newFileList[0]?.response?.data.url)
                 //console.log(newFileList[0]?.response?.data.url)
             }

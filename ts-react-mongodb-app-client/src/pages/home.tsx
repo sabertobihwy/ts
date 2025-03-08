@@ -5,7 +5,7 @@ import TEST from './movieList/test'
 export default class Home extends Component {
     render() {
         return (
-            <TEST />
+            <UploadDisplay />
         )
     }
 }
